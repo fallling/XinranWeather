@@ -12,6 +12,6 @@ class MainActivity : AppCompatActivity() {
         /*hello*/
         val textView:TextView = findViewById(R.id.textView)
         textView.text = "nihao"
-        textView.textSize = 15f
+        textView.textSize = 16f
     }
 }
