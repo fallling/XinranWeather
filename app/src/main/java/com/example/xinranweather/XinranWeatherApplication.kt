@@ -9,6 +9,7 @@ User: FALL
 Data: 2020/12/28
 Time: 23:05
  */
+
 class XinranWeatherApplication : Application() {
     companion object {
         const val TOKEN = "qq8ZCrKGgM6Z6i81"
