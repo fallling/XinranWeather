@@ -54,6 +54,5 @@ class PlaceFragment : Fragment() {
                 result.exceptionOrNull()?.printStackTrace()
             }
         })
-
     }
 }
