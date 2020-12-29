@@ -14,6 +14,8 @@ Time: 12:37
  */
 
 object XinranWeatherNetwork {
+
+    //封装PlaceService接口
     private val placeService = ServiceCreator.create<PlaceService>()
     suspend fun searchPlaces(query: String) = placeService.searchPlaces(query).await()
 
@@ -34,4 +36,12 @@ object XinranWeatherNetwork {
             })
         }
     }
+
+    //封装WeatherService接口
+    private val weatherService = ServiceCreator.create(WeatherService::class.java)
+    suspend fun getDailyWeather(lng: String, lat: String) =
+        weatherService.getDailyWeather(lng, lat).await()
+
+    suspend fun getRealtimeWeather(lng: String, lat: String) =
+        weatherService.getRealtimeWeather(lng, lat).await()
 }
