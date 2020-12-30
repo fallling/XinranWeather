@@ -1,4 +1,4 @@
-package com.example.xinranweather.ui.place
+package com.example.xinranweather
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,8 +10,8 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.xinranweather.MainActivity
-import com.example.xinranweather.R
+import com.example.xinranweather.ui.place.PlaceAdapter
+import com.example.xinranweather.ui.place.PlaceViewModel
 import com.example.xinranweather.ui.weather.WeatherActivity
 import kotlinx.android.synthetic.main.fragment_place.*
 
