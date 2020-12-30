@@ -69,13 +69,12 @@ class WeatherActivity : AppCompatActivity() {
 
             override fun onDrawerOpened(drawerView: View) {}
 
+            override fun onDrawerStateChanged(newState: Int) {}
+
             override fun onDrawerClosed(drawerView: View) {
                 val manager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 manager.hideSoftInputFromWindow(drawerView.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
             }
-
-            override fun onDrawerStateChanged(newState: Int) {}
-
         })
     }
 

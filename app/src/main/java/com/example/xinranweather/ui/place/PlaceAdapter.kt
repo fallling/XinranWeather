@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.xinranweather.PlaceFragment
 import com.example.xinranweather.R
 import com.example.xinranweather.logic.model.Place
 import com.example.xinranweather.ui.weather.WeatherActivity
@@ -47,7 +48,7 @@ class PlaceAdapter(private val fragment: PlaceFragment, private val placeList: L
                     putExtra("place_name", place.name)
                 }
                 fragment.startActivity(intent)
-                fragment.activity?.finish()
+                activity?.finish()
             }
             fragment.viewModel.savePlace(place)
         }

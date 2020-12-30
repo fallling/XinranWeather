@@ -21,7 +21,7 @@
         android:roundIcon="@drawable/ic_launcher_background"
         android:supportsRtl="true"
         android:theme="@style/Theme.XinranWeather">
-        <activity android:name=".ui.weather.WeatherActivity"></activity>
+        <activity android:name=".ui.weather.WeatherActivity" />
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
