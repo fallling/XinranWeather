@@ -1,4 +1,4 @@
-package com.example.xinranweather
+package com.example.xinranweather.ui.place
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,11 +8,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.xinranweather.ui.place.PlaceAdapter
-import com.example.xinranweather.ui.place.PlaceViewModel
+import com.example.xinranweather.MainActivity
+import com.example.xinranweather.R
 import com.example.xinranweather.ui.weather.WeatherActivity
 import kotlinx.android.synthetic.main.fragment_place.*
 
@@ -28,7 +27,7 @@ class PlaceFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        if (viewModel.isPlaceSaved()) {
+        if (activity is MainActivity && viewModel.isPlaceSaved()) {
             val place = viewModel.getSavedPlace()
             val intent = Intent(context, WeatherActivity::class.java).apply {
                 putExtra("location_lng", place.location.lng)
@@ -54,7 +53,7 @@ class PlaceFragment : Fragment() {
                 adapter.notifyDataSetChanged()
             }
         }
-        viewModel.placeLiveData.observe(viewLifecycleOwner, Observer { result ->
+        viewModel.placeLiveData.observe(viewLifecycleOwner, { result ->
             val places = result.getOrNull()
             if (places != null) {
                 recyclerView.visibility = View.VISIBLE
