@@ -1,6 +1,8 @@
 package com.example.xinranweather.logic
 
 import androidx.lifecycle.liveData
+import com.example.xinranweather.logic.dao.PlaceDao
+import com.example.xinranweather.logic.model.Place
 import com.example.xinranweather.logic.model.Weather
 import com.example.xinranweather.logic.network.XinranWeatherNetwork
 import kotlinx.coroutines.Dispatchers
@@ -54,12 +56,18 @@ object Repository {
     }
 
     private fun <T> fire(context: CoroutineContext, block: suspend () -> Result<T>) =
-        liveData<Result<T>>(context) {
-            val result = try {
-                block()
-            } catch (e: Exception) {
-                Result.failure<T>(e)
+            liveData<Result<T>>(context) {
+                val result = try {
+                    block()
+                } catch (e: Exception) {
+                    Result.failure<T>(e)
+                }
+                emit(result)
             }
-            emit(result)
-        }
+
+    fun savePlace(place: Place) = PlaceDao.savePlace(place)
+
+    fun getSavedPlace() = PlaceDao.getSavedPlace()
+
+    fun isPlaceSaved() = PlaceDao.isPlaceSaved()
 }
