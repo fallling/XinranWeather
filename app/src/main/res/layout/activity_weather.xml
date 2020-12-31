@@ -42,7 +42,7 @@
         android:clickable="true"
         android:focusable="true">
 
-        <fragment
+        <androidx.fragment.app.FragmentContainerView
             android:id="@+id/placeFragment"
             android:name="com.example.xinranweather.PlaceFragment"
             android:layout_width="match_parent"
