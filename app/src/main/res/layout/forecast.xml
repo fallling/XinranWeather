@@ -29,5 +29,4 @@
             android:orientation="vertical" />
     </LinearLayout>
 
-
 </com.google.android.material.card.MaterialCardView>

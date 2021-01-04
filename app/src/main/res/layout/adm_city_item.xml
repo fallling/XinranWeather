@@ -24,7 +24,6 @@
             android:text="开福区"
             android:textSize="22sp" />
 
-
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
