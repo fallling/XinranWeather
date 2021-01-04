@@ -21,22 +21,25 @@
         android:roundIcon="@drawable/ic_launcher_background"
         android:supportsRtl="true"
         android:theme="@style/Theme.XinranWeather">
+        <activity android:name=".ui.admcity.AdmCity">
 
-        <!--在application标签中声明service组件,每个app拥有自己单独的定位service-->
+        </activity>
+
+        <!-- 在application标签中声明service组件,每个app拥有自己单独的定位service -->
         <service android:name="com.amap.api.location.APSService" />
+
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="fe15a98806bdf6e724c050acbdc8efb1" />
 
         <activity android:name=".ui.weather.WeatherActivity" />
-
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

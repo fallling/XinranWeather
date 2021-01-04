@@ -20,29 +20,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initMap()
-
-        /* val mLocation = Location("112.938814","28.228209")
-         val place = Place("长沙",mLocation,"长沙")
-         val intent = Intent(context, WeatherActivity::class.java).apply {
-             putExtra("location_lng", place.location.lng)
-             putExtra("location_lat", place.location.lat)
-             putExtra("place_name", place.name)
-         }
-         mLocationClient?.stopLocation() //停止定位
-         startActivity(intent)*/
-
-/*        if(mLocationClient != null && mLocation != null && place != null){
-
-            val intent = Intent(context, WeatherActivity::class.java).apply {
-                putExtra("location_lng", place.location.lng)
-                putExtra("location_lat", place.location.lat)
-                putExtra("place_name", place.name)
-            }
-            startActivity(intent)
-            mLocationClient!!.onDestroy()
-        }*/
-
-
     }
 
     private fun initMap() {
@@ -55,7 +32,6 @@ class MainActivity : AppCompatActivity() {
         mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy)
         mLocationOption.setNeedAddress(true) //设置是否返回地址信息（默认返回地址信息）
         mLocationOption.setOnceLocation(true) //设置是否只定位一次,默认为false
-        mLocationOption.setWifiActiveScan(true) //设置是否强制刷新WIFI，默认为强制刷新
         mLocationOption.setMockEnable(false) //设置是否允许模拟位置,默认为false，不允许模拟位置
         mLocationOption.setInterval(15000) //设置定位间隔,单位毫秒,默认为2000ms
         mLocationOption.setOnceLocation(true) //可选，是否设置单次定位默认为false即持续定位
@@ -87,7 +63,6 @@ class MainActivity : AppCompatActivity() {
                         putExtra("place_name", place.name)
                     }
                     mLocationClient?.stopLocation() //停止定位
-                    //mLocationClient!!.onDestroy()
                     startActivity(intent)
                     finish()
                 } else {
