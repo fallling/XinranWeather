@@ -2,6 +2,4 @@
     <string name="app_name">XinranWeather</string>
     <string name="bgDesc">搜索城市背景</string>
     <string name="PlaceEdit">输入地址</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

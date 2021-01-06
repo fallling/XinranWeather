@@ -1,12 +1,20 @@
 package com.example.xinranweather.ui.weather
 
 import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +24,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.xinranweather.R
 import com.example.xinranweather.logic.model.Weather
 import com.example.xinranweather.logic.model.getSky
+import com.example.xinranweather.ui.admcity.AdmCity
 import kotlinx.android.synthetic.main.activity_weather.*
 import kotlinx.android.synthetic.main.forecast.*
 import kotlinx.android.synthetic.main.life_index.*
@@ -23,15 +32,15 @@ import kotlinx.android.synthetic.main.now.*
 import java.text.SimpleDateFormat
 import java.util.*
 
+
 class WeatherActivity : AppCompatActivity() {
 
     val viewModel by lazy { ViewModelProvider(this).get(WeatherViewModel::class.java) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_weather)
-
+        setSupportActionBar(toolbar)
         if (viewModel.locationLng.isEmpty()) {
             viewModel.locationLng = intent.getStringExtra("location_lng") ?: ""
         }
@@ -44,6 +53,15 @@ class WeatherActivity : AppCompatActivity() {
             viewModel.placeName = intent.getStringExtra("place_name") ?: ""
         }
 
+        var islocale = intent.getBooleanExtra("is_locale", false)
+
+        if (islocale) {
+            val drawable = resources.getDrawable(R.drawable.ic_location)
+            //设置图片大小，必须设置
+            drawable.setBounds(0, 0, drawable.minimumWidth, drawable.minimumHeight)
+            placeName.setCompoundDrawables(drawable, null, null, null)
+        }
+
         viewModel.weatherLiveData.observe(this, { result ->
             val weather = result.getOrNull()
             if (weather != null) {
@@ -54,6 +72,7 @@ class WeatherActivity : AppCompatActivity() {
             }
             swipeRefresh.isRefreshing = false
         })
+
         refreshWeather()
         swipeRefresh.setOnRefreshListener {
             refreshWeather()
@@ -125,6 +144,21 @@ class WeatherActivity : AppCompatActivity() {
         weatherLayout.visibility = View.VISIBLE
     }
 
+    private fun capture(linearLayout: LinearLayout): Bitmap? {
+        var h = 0
+        val bitmap: Bitmap
+        for (i in 0 until linearLayout.childCount) h += linearLayout.getChildAt(i).height
+        // 创建对应大小的bitmap
+        bitmap = Bitmap.createBitmap(
+                linearLayout.width, h,
+                Bitmap.Config.ARGB_8888
+        )
+        val canvas = Canvas(bitmap)
+        linearLayout.draw(canvas)
+        return bitmap
+
+    }
+
     val tag = "WeatherActivity"
     override fun onStart() {
         super.onStart()
@@ -154,5 +188,37 @@ class WeatherActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         Log.d(tag, "onDestroy")
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.toolbar, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.admCity -> {
+                val intent = Intent(this, AdmCity::class.java)
+                startActivity(intent)
+            }
+
+            R.id.shareItem -> {
+                val intent = Intent(Intent.ACTION_SEND)
+                intent.type = "image/*"
+                val u: Uri = Uri.parse(
+                        MediaStore.Images.Media.insertImage(
+                                contentResolver,
+                                capture(this.bodyLayout1),
+                                null,
+                                null
+                        )
+                ) //将截图bitmap存系统相册
+
+                intent.putExtra(Intent.EXTRA_STREAM, u)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                this.startActivity(Intent.createChooser(intent, ""))
+            }
+        }
+        return true
     }
 }

@@ -46,11 +46,16 @@ class PlaceAdapter(private val fragment: PlaceFragment, private val placeList: L
                     putExtra("location_lng", place.location.lng)
                     putExtra("location_lat", place.location.lat)
                     putExtra("place_name", place.name)
+
+                    if (place.name.equals(fragment.viewModel.getLocalPlace().name)) {
+                        putExtra("is_locale", true)
+                    }
                 }
+                fragment.viewModel.savePlace(place)
                 fragment.startActivity(intent)
                 activity?.finish()
             }
-            fragment.viewModel.savePlace(place)
+
         }
         return holder
     }

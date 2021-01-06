@@ -3,15 +3,20 @@ package com.example.xinranweather
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.amap.api.location.AMapLocation
 import com.amap.api.location.AMapLocationClient
 import com.amap.api.location.AMapLocationClientOption
 import com.amap.api.location.AMapLocationListener
 import com.example.xinranweather.XinranWeatherApplication.Companion.context
+import com.example.xinranweather.logic.Repository
 import com.example.xinranweather.logic.model.Location
 import com.example.xinranweather.logic.model.Place
+import com.example.xinranweather.ui.admcity.AdmCity
 import com.example.xinranweather.ui.weather.WeatherActivity
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,7 +24,23 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        setSupportActionBar(toolbar)
         initMap()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.toolbar, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.admCity -> {
+                val intent = Intent(this, AdmCity::class.java)
+                startActivity(intent)
+            }
+        }
+        return true
     }
 
     private fun initMap() {
@@ -31,7 +52,6 @@ class MainActivity : AppCompatActivity() {
         //设置定位模式为高精度模式，AMapLocationMode.Battery_Saving为低功耗模式，AMapLocationMode.Device_Sensors是仅设备模式
         mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy)
         mLocationOption.setNeedAddress(true) //设置是否返回地址信息（默认返回地址信息）
-        mLocationOption.setOnceLocation(true) //设置是否只定位一次,默认为false
         mLocationOption.setMockEnable(false) //设置是否允许模拟位置,默认为false，不允许模拟位置
         mLocationOption.setInterval(15000) //设置定位间隔,单位毫秒,默认为2000ms
         mLocationOption.setOnceLocation(true) //可选，是否设置单次定位默认为false即持续定位
@@ -53,16 +73,18 @@ class MainActivity : AppCompatActivity() {
                     // aMapLocation.getLatitude();//获取纬度
                     // aMapLocation.getLongitude();//获取经度
                     val mLocation = Location(
-                        aMapLocation.longitude.toString(),
-                        aMapLocation.latitude.toString()
+                            aMapLocation.longitude.toString(),
+                            aMapLocation.latitude.toString()
                     )
-                    val place = Place(aMapLocation.city, mLocation, aMapLocation.address)
+                    val place = Place(aMapLocation.district, mLocation, aMapLocation.address)
                     val intent = Intent(context, WeatherActivity::class.java).apply {
                         putExtra("location_lng", place.location.lng)
                         putExtra("location_lat", place.location.lat)
                         putExtra("place_name", place.name)
+                        putExtra("is_locale", true)
                     }
                     mLocationClient?.stopLocation() //停止定位
+                    Repository.saveLocalPlace(place)
                     startActivity(intent)
                     finish()
                 } else {

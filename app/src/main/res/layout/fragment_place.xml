@@ -6,7 +6,6 @@
     android:background="?android:windowBackground"
     tools:context=".PlaceFragment">
 
-
     <ImageView
         android:id="@+id/bgimageView"
         android:layout_width="match_parent"
@@ -15,11 +14,20 @@
         android:contentDescription="@string/bgDesc"
         android:src="@drawable/bg_place" />
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/actionBarLayout"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/white">
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:background="@color/white"
+            android:src="@drawable/ic_location_g" />
 
         <EditText
             android:id="@+id/searchPlaceEdit"
@@ -34,7 +42,7 @@
             android:inputType="text"
             android:paddingStart="10dp"
             android:paddingEnd="10dp" />
-    </FrameLayout>
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

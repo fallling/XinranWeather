@@ -3,4 +3,8 @@
     <item
         android:id="@+id/admCity"
         android:title="管理城市" />
+
+    <item
+        android:id="@+id/shareItem"
+        android:title="分享" />
 </menu>

@@ -1,5 +1,6 @@
 package com.example.xinranweather.ui.admcity
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import com.example.xinranweather.logic.Repository
 import com.example.xinranweather.logic.model.Location
 import com.example.xinranweather.logic.model.Place
 import com.example.xinranweather.logic.model.getSky
+import com.example.xinranweather.ui.weather.WeatherActivity
 
 /**
 User: FALL
@@ -47,6 +49,17 @@ class AdmCityAdapter(private val activity: AdmCity, private val placeList: List<
         holder.itemView.setOnClickListener {
             val position = holder.adapterPosition
             val place = placeList[position]
+            val intent = Intent(this.activity, WeatherActivity::class.java).apply {
+                putExtra("location_lng", place.location.lng)
+                putExtra("location_lat", place.location.lat)
+                putExtra("place_name", place.name)
+
+                if (place.name.equals(activity.viewModel.getLocalPlace().name)) {
+                    putExtra("is_locale", true)
+                }
+            }
+            this.activity.startActivity(intent)
+            this.activity.finish()
         }
         return holder
     }
@@ -54,6 +67,13 @@ class AdmCityAdapter(private val activity: AdmCity, private val placeList: List<
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val place = placeList[position]
         holder.placeName.text = place.name
+        if (place.name.equals(activity.viewModel.getLocalPlace().name)) {
+            val drawable = activity.resources.getDrawable(R.drawable.ic_location_g)
+            //设置图片大小，必须设置
+            drawable.setBounds(0, 0, drawable.minimumWidth, drawable.minimumHeight)
+            holder.placeName.setCompoundDrawables(null, null, drawable, null)
+        }
+
         refreshWeather(place.location.lng, place.location.lat)
         weatherLiveData.observe(this.activity, { result ->
             val weather = result.getOrNull()

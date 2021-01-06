@@ -21,7 +21,14 @@
         android:roundIcon="@drawable/ic_launcher_background"
         android:supportsRtl="true"
         android:theme="@style/Theme.XinranWeather">
-        <activity android:name=".ui.admcity.AdmCity">
+
+        <activity
+            android:name=".ui.place.PlaceActivity"
+            android:label="添加城市" />
+
+        <activity
+            android:name=".ui.admcity.AdmCity"
+            android:label="管理城市">
 
         </activity>
 

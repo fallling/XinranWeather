@@ -26,5 +26,8 @@ class PlaceViewModel : ViewModel() {
 
     fun savePlace(place: Place) = Repository.savePlace(place)
     fun getSavedPlace() = Repository.getSavedPlace()
-    fun isPlaceSaved() = Repository.isPlaceSaved()
+    fun getSavedAllPlace() = Repository.getAllSavedPlaces()
+    fun isPlaceSaved(place: Place) = Repository.isPlaceSaved(place)
+    fun getLocalPlace() = Repository.getLocalPlace()
+    fun getAllSavedPlaces() = Repository.getAllSavedPlaces()
 }
