@@ -53,8 +53,9 @@ class WeatherActivity : AppCompatActivity() {
             viewModel.placeName = intent.getStringExtra("place_name") ?: ""
         }
 
-        var islocale = intent.getBooleanExtra("is_locale", false)
+        val islocale = intent.getBooleanExtra("is_locale", false)
 
+        //添加定位图标
         if (islocale) {
             val drawable = resources.getDrawable(R.drawable.ic_location)
             //设置图片大小，必须设置

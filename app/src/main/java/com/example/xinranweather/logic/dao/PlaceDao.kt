@@ -14,13 +14,16 @@ Time: 23:41
 
 object PlaceDao {
 
+/*
     fun getSavedPlace(): Place {
         val placeJson = sharedPreferences().getString("place_1", "")
         return Gson().fromJson(placeJson, Place::class.java)
     }
+*/
 
     //fun isPlaceSaved() = sharedPreferences().contains("place")
 
+    //判断Place是否保存
     fun isPlaceSaved(place: Place): Boolean {
         val placeList: ArrayList<Place> = getAllPlaces()
         if (placeList.contains(place) || place.name == getLocalPlace().name) {
@@ -29,9 +32,10 @@ object PlaceDao {
         return false
     }
 
-
+    //获取sharedPreferences
     private fun sharedPreferences() = XinranWeatherApplication.context.getSharedPreferences("Xinran_weather", Context.MODE_PRIVATE)
 
+    //保存所有Place
     fun savePlaces(placeList: ArrayList<Place>) {
         sharedPreferences().edit {
             putInt("place_size", placeList.size)
@@ -42,6 +46,7 @@ object PlaceDao {
         }
     }
 
+    //保存Place
     fun savePlace(place: Place) {
         if (!isPlaceSaved(place)) {
             val placeList = getAllPlaces()
@@ -50,17 +55,20 @@ object PlaceDao {
         }
     }
 
+    //保存自动定位获得的城市
     fun saveLocalPlace(place: Place) {
         sharedPreferences().edit {
             putString("place_local", Gson().toJson(place))
         }
     }
 
+    //获取LocalPlace
     fun getLocalPlace(): Place {
         val placeJson = sharedPreferences().getString("place_local", "")
         return Gson().fromJson(placeJson, Place::class.java)
     }
 
+    //获取所有Place
     fun getAllPlaces(): ArrayList<Place> {
         val size = sharedPreferences().getInt("place_size", 0)
         val placeList: ArrayList<Place> = arrayListOf()

@@ -39,7 +39,9 @@
             android:name="com.amap.api.v2.apikey"
             android:value="fe15a98806bdf6e724c050acbdc8efb1" />
 
-        <activity android:name=".ui.weather.WeatherActivity" />
+        <activity
+            android:name=".ui.weather.WeatherActivity"
+            android:label="天气" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

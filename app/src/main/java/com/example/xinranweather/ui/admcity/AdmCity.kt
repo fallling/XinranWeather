@@ -21,7 +21,7 @@ class AdmCity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         //加载数据
-        var placeList = ArrayList<Place>()
+        val placeList = ArrayList<Place>()
         val place = viewModel.getLocalPlace()
         placeList.add(place)
         placeList.addAll(viewModel.getAllSavedPlace())
